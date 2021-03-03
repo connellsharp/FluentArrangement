@@ -18,15 +18,13 @@ namespace FluentArrangement
 
     internal class CreatedObjectResponse : ICreateResponse
     {
-        private object _obj;
-
         public CreatedObjectResponse(object obj)
         {
-            _obj = obj;
+            CreatedObject = obj;
         }
 
         public bool HasCreated => true;
 
-        public object CreatedObject => _obj;
+        public object CreatedObject { get; }
     }
 }

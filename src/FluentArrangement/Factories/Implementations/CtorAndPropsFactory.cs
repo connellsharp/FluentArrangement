@@ -1,12 +1,35 @@
+using System;
+
 namespace FluentArrangement
 {
-    internal class CtorAndPropsFactory : IFactory
+    public class CtorAndPropsFactory : IFactory
     {
-        public ICreateResponse Create(CreateRequest request)
+        public ICreateResponse Create(ICreateRequest request)
         {
-            // call ctor and set properties from fixture
+            if(!IsDtoModelType(request.Type))
+                return new NotCreatedResponse();
 
-            return new CreatedObjectResponse(null);
+            var instance = Activator.CreateInstance(request.Type);
+
+            foreach(var property in request.Type.GetProperties())
+            {
+                if(!property.CanWrite)
+                    continue;
+
+                var response = request.ParentFactory.Create(new CreatePropertyRequest(property, this));
+
+                if(!response.HasCreated)
+                    continue;
+
+                property.SetValue(instance, response.CreatedObject);
+            }
+
+            return new CreatedObjectResponse(instance);
+        }
+
+        private bool IsDtoModelType(Type type)
+        {
+            return !type.IsAbstract && !type.IsPrimitive && type != typeof(string);
         }
     }
 }

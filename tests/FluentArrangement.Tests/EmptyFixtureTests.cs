@@ -12,31 +12,30 @@ namespace FluentArrangement.Tests
             _fixture = new Fixture();
         }
 
-        [Fact]
-        public void CreatesNumberUsingRegisteredValue()
+        [Theory]
+        [InlineData(42)]
+        [InlineData(1337)]
+        [InlineData(5318008)]
+        public void CreatesNumberUsingRegisteredValue(int number)
         {
-            _fixture.RegisterType<int>(42);
+            _fixture.RegisterType<int>(number);
 
             var result = _fixture.Create<int>();
 
-            result.Should().Be(42);
+            result.Should().Be(number);
         }
 
-        [Fact]
-        public void CreatesObjectWithMethodThatReturnsRegisteredValue()
+        [Theory]
+        [InlineData("")]
+        [InlineData("Test")]
+        [InlineData("Longer string with some words")]
+        public void CreatesStringUsingRegisteredString(string text)
         {
-            _fixture.RegisterType<int>(42);
+            _fixture.RegisterType<string>(text);
 
-            var sut = _fixture.Create<INumberGenerator>();
+            var result = _fixture.Create<string>();
 
-            var result = sut.GetNumber();
-
-            result.Should().Be(42);
-        }
-
-        private interface INumberGenerator
-        {
-            int GetNumber();
+            result.Should().Be(text);
         }
     }
 }

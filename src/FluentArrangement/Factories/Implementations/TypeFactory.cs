@@ -11,10 +11,9 @@ namespace FluentArrangement
             _func = func;
         }
 
-        public ICreateResponse Create(CreateRequest request)
+        public ICreateResponse Create(ICreateRequest request)
         {
-            if(request is CreateTypeRequest createTypeRequest
-                && typeof(T).IsAssignableFrom(createTypeRequest.Type))
+            if(typeof(T).IsAssignableFrom(request.Type))
             {
                 var obj = _func();
                 return new CreatedObjectResponse(obj);

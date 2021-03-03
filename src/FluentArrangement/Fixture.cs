@@ -14,12 +14,9 @@ namespace FluentArrangement
 
         public T Create<T>(string name = null)
         {
-            var response = Factory.Create(new CreateTypeRequest(typeof(T)));
-
-            if(response.HasCreated)
-                return (T)response.CreatedObject;
-
-            throw new NoFactoryFoundException();
+            return Factory
+                .Create(new CreateTypeRequest(typeof(T), new EmptyFactory()))
+                .GetRequiredCreatedObject<T>();
         }
     }
 
