@@ -1,6 +1,6 @@
 namespace FluentArrangement
 {
-    internal class Fixture
+    public class Fixture
     {
         public T Create<T>(string name = null)
         {

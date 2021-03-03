@@ -1,10 +1,13 @@
-﻿using System;
+using System;
+using Xunit;
 
-namespace FluentArrangement
+namespace FluentArrangement.Tests
 {
-    public class Demo
+    public class BasicTests
     {
-        public void SetUp()
+        private readonly IFixture _fixture;
+
+        public BasicTests()
         {
             _fixture = new Fixture()
                 .Register(new CtorAndPropsFactory())
@@ -13,8 +16,10 @@ namespace FluentArrangement
                 .RegisterType<IMyType>(c => c.Resolve<MyType>())
                 .Register(new ParameterFactory<string>("userId", "123456"))
                 .RegisterParameter<string>("userId", "123456");
+            
         }
 
+        [Fact]
         public void Demo()
         {
             Given.The<ITestRepository>.Returns(new TestObject());
