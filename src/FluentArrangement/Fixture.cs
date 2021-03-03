@@ -1,43 +1,36 @@
+using System;
+
 namespace FluentArrangement
 {
-    public class Fixture
+    public class Fixture : IFixture
     {
         public T Create<T>(string name = null)
         {
-
-        }
-    }
-
-    public interface IFactory
-    {
-        CreateResponse Create(CreateRequest request);
-    }
-
-    internal class AggregateFactory : IFactory
-    {
-        public CreateResponse Create(CreateRequest request)
-        {
             
         }
-    }
 
-    internal class CtorAndPropsFactory : IFactory
-    {
-        public CreateResponse Create(CreateRequest request)
+        public IFixture Register(IFactory factory)
         {
-            // call ctor and set properties from fixture
-
-            return new CreateResponse(obj);
+            throw new System.NotImplementedException();
         }
     }
 
-    internal class MockEverythingFactory : IFactory
+    public interface IFixture
     {
-        public CreateResponse Create(CreateRequest request)
-        {
-            // create mock and configure props and methods to return from fixture
+        IFixture Register(IFactory factory);
 
-            return new CreateResponse(null);
-        }
+        T Create<T>(string name = null);
+    }
+
+    public static class FixtureExtensions
+    {
+        public static IFixture RegisterType<T>(this IFixture fixture, T instance)
+            => fixture.RegisterType<T>(() => instance);
+
+        public static IFixture RegisterType<T>(this IFixture fixture, Func<T> func)
+            => fixture.Register(new TypeFactory<T>(func));
+
+        // public static IFixture RegisterParameter<T>(this IFixture fixture, string name, T value)
+        //     => fixture.Register(new ParameterFactory<T>(name, value));
     }
 }
