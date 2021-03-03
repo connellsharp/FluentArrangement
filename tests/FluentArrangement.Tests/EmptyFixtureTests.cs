@@ -13,7 +13,17 @@ namespace FluentArrangement.Tests
         }
 
         [Fact]
-        public void Demo()
+        public void CreatesNumberUsingRegisteredValue()
+        {
+            _fixture.RegisterType<int>(42);
+
+            var result = _fixture.Create<int>();
+
+            result.Should().Be(42);
+        }
+
+        [Fact]
+        public void CreatesObjectWithMethodThatReturnsRegisteredValue()
         {
             _fixture.RegisterType<int>(42);
 

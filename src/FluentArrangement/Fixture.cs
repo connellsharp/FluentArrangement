@@ -4,14 +4,22 @@ namespace FluentArrangement
 {
     public class Fixture : IFixture
     {
-        public T Create<T>(string name = null)
-        {
-            
-        }
+        private AggregateFactory Factory = new AggregateFactory();
 
         public IFixture Register(IFactory factory)
         {
-            throw new System.NotImplementedException();
+            Factory.Add(factory);
+            return this;
+        }
+
+        public T Create<T>(string name = null)
+        {
+            var response = Factory.Create(new CreateTypeRequest(typeof(T)));
+
+            if(response.HasCreated)
+                return (T)response.CreatedObject;
+
+            throw new NoFactoryFoundException();
         }
     }
 
