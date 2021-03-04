@@ -13,9 +13,7 @@ namespace FluentArrangement.Tests
         }
 
         [Theory]
-        [InlineData(42)]
-        [InlineData(1337)]
-        [InlineData(5318008)]
+        [MemberData(nameof(TestCases.Ints))]
         public void CreatesNumberUsingRegisteredValue(int number)
         {
             _fixture.RegisterType<int>(number);
@@ -26,9 +24,7 @@ namespace FluentArrangement.Tests
         }
 
         [Theory]
-        [InlineData("")]
-        [InlineData("Test")]
-        [InlineData("Longer string with some words")]
+        [MemberData(nameof(TestCases.Strings))]
         public void CreatesStringUsingRegisteredString(string text)
         {
             _fixture.RegisterType<string>(text);

@@ -18,9 +18,7 @@ namespace FluentArrangement.Tests
         }
 
         [Theory]
-        [InlineData(42)]
-        [InlineData(1337)]
-        [InlineData(5318008)]
+        [MemberData(nameof(TestCases.Ints))]
         public void SetsNumericProperty(int number)
         {
             _fixture.RegisterType<int>(number);
