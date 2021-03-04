@@ -16,9 +16,23 @@ namespace FluentArrangement.Tests
         {
             int GetNumber();
         }
+        
+        public static object[][] IntTestCases = new[]
+        {
+            new object[] { 42 },
+            new object[] { 1337 },
+            new object[] { 5318008 }
+        };
+        
+        public static object[][] StringTestCases = new[]
+        {
+            new object[] { "" },
+            new object[] { "Test" },
+            new object[] { "" }
+        };
 
         [Theory]
-        [MemberData(nameof(TestCases.Ints))]
+        [MemberData(nameof(IntTestCases))]
         public void SetsNumericProperty(int number)
         {
             _fixture.RegisterType<int>(number);

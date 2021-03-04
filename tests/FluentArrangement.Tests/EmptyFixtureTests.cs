@@ -12,8 +12,22 @@ namespace FluentArrangement.Tests
             _fixture = new Fixture();
         }
 
+        public static object[][] IntTestCases = new[]
+        {
+            new object[] { 42 },
+            new object[] { 1337 },
+            new object[] { 5318008 }
+        };
+        
+        public static object[][] StringTestCases = new[]
+        {
+            new object[] { "" },
+            new object[] { "Test" },
+            new object[] { "" }
+        };
+
         [Theory]
-        [MemberData(nameof(TestCases.Ints))]
+        [MemberData(nameof(IntTestCases))]
         public void CreatesNumberUsingRegisteredValue(int number)
         {
             _fixture.RegisterType<int>(number);
@@ -24,7 +38,7 @@ namespace FluentArrangement.Tests
         }
 
         [Theory]
-        [MemberData(nameof(TestCases.Strings))]
+        [MemberData(nameof(StringTestCases))]
         public void CreatesStringUsingRegisteredString(string text)
         {
             _fixture.RegisterType<string>(text);
