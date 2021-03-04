@@ -4,8 +4,7 @@ namespace FluentArrangement
 {
     public class Fixture : IFixture
     {
-        private FactoriesScope _topLevelScope = new FactoriesScope();
-        private EmptyScope _emptyScope = new EmptyScope();
+        private FactoriesScope _topLevelScope = new FactoriesScope(new EmptyScope());
 
         public IFixture Register(IFactory factory)
         {
@@ -16,7 +15,7 @@ namespace FluentArrangement
         public T Create<T>(string name = null)
         {
             return _topLevelScope
-                .Create(new CreateTypeRequest(typeof(T), _emptyScope))
+                .Create(new CreateTypeRequest(typeof(T)))
                 .GetRequiredCreatedObject<T>();
         }
     }

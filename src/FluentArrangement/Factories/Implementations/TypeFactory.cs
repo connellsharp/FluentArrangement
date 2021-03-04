@@ -11,7 +11,7 @@ namespace FluentArrangement
             _func = func;
         }
 
-        public ICreateResponse Create(ICreateRequest request)
+        public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
             if(typeof(T).IsAssignableFrom(request.Type))
             {

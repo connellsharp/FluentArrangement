@@ -12,12 +12,13 @@ namespace FluentArrangement
 
         private ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
-        public ICreateResponse Create(ICreateRequest request)
+        public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
             if(!CanCreateObject(request.Type))
                 return new NotCreatedResponse();
 
-            var createdObject = _proxyGenerator.CreateInterfaceProxyWithoutTarget(request.Type, new MyInterceptor(request.Scope));
+            var interceptor = new MyInterceptor(scope);
+            var createdObject = _proxyGenerator.CreateInterfaceProxyWithoutTarget(request.Type, interceptor);
 
             return new CreatedObjectResponse(createdObject);
         }
@@ -33,7 +34,7 @@ namespace FluentArrangement
 
             public void Intercept(IInvocation invocation)
             {
-                var value = _scope.Create(new CreateTypeRequest(invocation.Method.ReturnType, _scope));
+                var value = _scope.Create(new CreateTypeRequest(invocation.Method.ReturnType));
                 invocation.ReturnValue = value.CreatedObject;
             }
         }

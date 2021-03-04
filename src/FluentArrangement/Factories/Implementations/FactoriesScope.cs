@@ -5,7 +5,14 @@ namespace FluentArrangement
 {
     internal class FactoriesScope : IScope
     {
-        private ICollection<IFactory> _innerFactories = new List<IFactory>();
+        private readonly IScope _parentScope;
+        private readonly ICollection<IFactory> _innerFactories;
+
+        public FactoriesScope(IScope parentScope)
+        {
+            _parentScope = parentScope;
+            _innerFactories = new List<IFactory>();
+        }
 
         public void AddFactory(IFactory factory)
         {
@@ -16,13 +23,13 @@ namespace FluentArrangement
         {
             foreach(var factory in _innerFactories)
             {
-                var response = factory.Create(new ScopedRequest(request, this));
+                var response = factory.Create(request, this);
 
                 if(response.HasCreated)
                     return response;
             }
 
-            return request.Scope.Create(request);
+            return _parentScope.Create(request);
         }
 
         private class ScopedRequest : ICreateRequest

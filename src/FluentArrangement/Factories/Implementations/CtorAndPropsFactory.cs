@@ -4,7 +4,7 @@ namespace FluentArrangement
 {
     public class CtorAndPropsFactory : IFactory
     {
-        public ICreateResponse Create(ICreateRequest request)
+        public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
             if(!IsDtoModelType(request.Type))
                 return new NotCreatedResponse();
@@ -16,7 +16,7 @@ namespace FluentArrangement
                 if(!property.CanWrite)
                     continue;
 
-                var response = request.Scope.Create(new CreatePropertyRequest(property, request.Scope));
+                var response = scope.Create(new CreatePropertyRequest(property));
 
                 if(!response.HasCreated)
                     continue;
