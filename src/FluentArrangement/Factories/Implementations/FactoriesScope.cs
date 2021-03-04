@@ -22,7 +22,7 @@ namespace FluentArrangement
                     return response;
             }
 
-            return new NotCreatedResponse();
+            return request.Scope.Create(request);
         }
 
         private class ScopedRequest : ICreateRequest
