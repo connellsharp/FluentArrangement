@@ -12,7 +12,7 @@ namespace FluentArrangement.Tests
             _fixture = new Fixture().Register(new MockEverythingFactory());
         }
 
-        private interface INumberGenerator
+        public interface INumberGenerator
         {
             int GetNumber();
         }
