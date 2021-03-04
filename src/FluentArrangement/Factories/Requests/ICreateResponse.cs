@@ -9,13 +9,6 @@ namespace FluentArrangement
         object CreatedObject { get; }
     }
 
-    public class NotCreatedResponse : ICreateResponse
-    {
-        public bool HasCreated => false;
-
-        public object CreatedObject => throw new InvalidOperationException("Object has not been created. Check HasCreated first.");
-    }
-
     internal class CreatedObjectResponse : ICreateResponse
     {
         public CreatedObjectResponse(object obj)
@@ -26,5 +19,12 @@ namespace FluentArrangement
         public bool HasCreated => true;
 
         public object CreatedObject { get; }
+    }
+
+    public class NotCreatedResponse : ICreateResponse
+    {
+        public bool HasCreated => false;
+
+        public object CreatedObject => throw new InvalidOperationException("Object has not been created. Check HasCreated first.");
     }
 }
