@@ -15,8 +15,14 @@ namespace FluentArrangement.Tests
         public interface INumberGenerator
         {
             int GetNumber();
+
+            string GetText();
+
+            string TextProperty { get; }
+
+            int GetNumberWithArg(decimal arg);
         }
-        
+
         public static object[][] IntTestCases = new[]
         {
             new object[] { 42 },
@@ -33,7 +39,7 @@ namespace FluentArrangement.Tests
 
         [Theory]
         [MemberData(nameof(IntTestCases))]
-        public void SetsNumericProperty(int number)
+        public void ProxiedMethodReturnsRegisteredNumber(int number)
         {
             _fixture.RegisterType<int>(number);
 
@@ -41,6 +47,42 @@ namespace FluentArrangement.Tests
             var result = generator.GetNumber();
 
             result.Should().Be(number);
+        }
+
+        [Theory]
+        [MemberData(nameof(IntTestCases))]
+        public void ProxiedMethodWithArgReturnsRegisteredNumber(int number)
+        {
+            _fixture.RegisterType<int>(number);
+
+            var generator = _fixture.Create<INumberGenerator>();
+            var result = generator.GetNumberWithArg(13.37m);
+
+            result.Should().Be(number);
+        }
+
+        [Theory]
+        [MemberData(nameof(StringTestCases))]
+        public void ProxiedMethodReturnsRegisteredString(string text)
+        {
+            _fixture.RegisterType<string>(text);
+
+            var generator = _fixture.Create<INumberGenerator>();
+            var result = generator.GetText();
+
+            result.Should().Be(text);
+        }
+
+        [Theory]
+        [MemberData(nameof(StringTestCases))]
+        public void ProxiedPropertyReturnsRegisteredString(string text)
+        {
+            _fixture.RegisterType<string>(text);
+
+            var generator = _fixture.Create<INumberGenerator>();
+            var result = generator.TextProperty;
+
+            result.Should().Be(text);
         }
     }
 }
