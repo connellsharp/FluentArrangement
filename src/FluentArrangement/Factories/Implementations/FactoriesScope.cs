@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FluentArrangement
 {
-    internal class AggregateFactory : IFactory
+    internal class FactoriesScope : IScope
     {
         private ICollection<IFactory> _innerFactories = new List<IFactory>();
 
-        public void Add(IFactory factory)
+        public void AddFactory(IFactory factory)
         {
             _innerFactories.Add(factory);
         }
@@ -16,7 +16,7 @@ namespace FluentArrangement
         {
             foreach(var factory in _innerFactories)
             {
-                var response = factory.Create(new AggregateRequest(request, this));
+                var response = factory.Create(new ScopedRequest(request, this));
 
                 if(response.HasCreated)
                     return response;
@@ -25,20 +25,19 @@ namespace FluentArrangement
             return new NotCreatedResponse();
         }
 
-        private class AggregateRequest : ICreateRequest
+        private class ScopedRequest : ICreateRequest
         {
             private readonly ICreateRequest _innerRequest;
-            private readonly AggregateFactory _factory;
 
-            public AggregateRequest(ICreateRequest innerRequest, AggregateFactory factory)
+            public ScopedRequest(ICreateRequest innerRequest, IScope scope)
             {
                 _innerRequest = innerRequest;
-                _factory = factory;
+                Scope = scope;
             }
 
             public Type Type => _innerRequest.Type;
 
-            public IFactory ParentFactory => _factory;
+            public IScope Scope { get; }
         }
     }
 }

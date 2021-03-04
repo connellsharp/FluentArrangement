@@ -16,7 +16,7 @@ namespace FluentArrangement
                 if(!property.CanWrite)
                     continue;
 
-                var response = request.ParentFactory.Create(new CreatePropertyRequest(property, request.ParentFactory));
+                var response = request.Scope.Create(new CreatePropertyRequest(property, request.Scope));
 
                 if(!response.HasCreated)
                     continue;

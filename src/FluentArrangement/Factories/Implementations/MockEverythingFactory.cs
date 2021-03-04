@@ -17,23 +17,23 @@ namespace FluentArrangement
             if(!CanCreateObject(request.Type))
                 return new NotCreatedResponse();
 
-            var createdObject = _proxyGenerator.CreateInterfaceProxyWithoutTarget(request.Type, new MyInterceptor(request.ParentFactory));
+            var createdObject = _proxyGenerator.CreateInterfaceProxyWithoutTarget(request.Type, new MyInterceptor(request.Scope));
 
             return new CreatedObjectResponse(createdObject);
         }
 
         private class MyInterceptor : IInterceptor
         {
-            private IFactory parentFactory;
+            private IScope _scope;
 
-            public MyInterceptor(IFactory parentFactory)
+            public MyInterceptor(IScope scope)
             {
-                this.parentFactory = parentFactory;
+                _scope = scope;
             }
 
             public void Intercept(IInvocation invocation)
             {
-                var value = parentFactory.Create(new CreateTypeRequest(invocation.Method.ReturnType, parentFactory));
+                var value = _scope.Create(new CreateTypeRequest(invocation.Method.ReturnType, _scope));
                 invocation.ReturnValue = value.CreatedObject;
             }
         }

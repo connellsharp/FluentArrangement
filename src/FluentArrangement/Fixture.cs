@@ -4,18 +4,18 @@ namespace FluentArrangement
 {
     public class Fixture : IFixture
     {
-        private AggregateFactory _topLevelFactory = new AggregateFactory();
+        private FactoriesScope _topLevelScope = new FactoriesScope();
 
         public IFixture Register(IFactory factory)
         {
-            _topLevelFactory.Add(factory);
+            _topLevelScope.AddFactory(factory);
             return this;
         }
 
         public T Create<T>(string name = null)
         {
-            return _topLevelFactory
-                .Create(new CreateTypeRequest(typeof(T), new EmptyFactory()))
+            return _topLevelScope
+                .Create(new CreateTypeRequest(typeof(T), _topLevelScope))
                 .GetRequiredCreatedObject<T>();
         }
     }
