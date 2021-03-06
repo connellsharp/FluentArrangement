@@ -10,8 +10,8 @@ namespace FluentArrangement
             return fixture;
         }
 
-        public static IFixture Use<T>(this IFixture fixture, Func<IScope, T> func)
-            => fixture.Use(new FuncFactory<T>(func));
+        public static IFixture Use<T>(this IFixture fixture, Func<IServiceProvider, T> func)
+            => fixture.Use(new FuncFactory<T>(scope => func(new ScopeServiceProvider(scope))));
 
         public static IFixture Use<T>(this IFixture fixture, Func<T> func)
             => fixture.Use(_ => func());
@@ -21,13 +21,13 @@ namespace FluentArrangement
 
         public static IFixture UseType<TImplementation, TAbstraction>(this IFixture fixture)
             where TImplementation : TAbstraction
-            => fixture.Use<TAbstraction>(scope => scope.CreateObjectFromType<TImplementation>());
+            => fixture.Use<TAbstraction>(sp => sp.GetService<TImplementation>());
 
         // public static IFixture UseParameter<T>(this IFixture fixture, string name, T value)
         //     => fixture.Use(new ParameterFactory<T>(name, value));
 
         public static IFixture UseDefaults(this IFixture fixture)
-            => fixture.Use(new DefaultFactory());
+            => fixture.Use(new DefaultValueFactory());
 
         public static IFixture UseConstructorAndSetProperties(this IFixture fixture)
             => fixture.Use(new ConstructorAndPropertiesFactory());

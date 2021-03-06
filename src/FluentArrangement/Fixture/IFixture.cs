@@ -1,10 +1,12 @@
+using System;
+
 namespace FluentArrangement
 {
     public interface IFixture
     {
         void Register(IFactory factory);
 
-        T Create<T>();
+        object Create(Type type);
 
         IFixture NewScope();
     }

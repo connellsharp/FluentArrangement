@@ -1,3 +1,5 @@
+using System;
+
 namespace FluentArrangement
 {
     public class ScopeFixture : IFixture
@@ -14,9 +16,9 @@ namespace FluentArrangement
             _thisScope.AddFactory(factory);
         }
 
-        public T Create<T>()
+        public object Create(Type type)
         {
-            return _thisScope.CreateObjectFromType<T>();
+            return _thisScope.CreateObjectFromType(type);
         }
 
         public IFixture NewScope()

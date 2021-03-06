@@ -1,3 +1,5 @@
+using System;
+
 namespace FluentArrangement
 {
     internal static class ScopeCreateExtensions
@@ -13,13 +15,12 @@ namespace FluentArrangement
         }
 
         internal static object CreateObject(this IScope scope, ICreateRequestWithException request)
-        {
-            return scope.CreateObject<object>(request);
-        }
+            => scope.CreateObject<object>(request);
+
+        internal static object CreateObjectFromType(this IScope scope, Type type)
+            => scope.CreateObject(new CreateTypeRequest(type));
 
         internal static T CreateObjectFromType<T>(this IScope scope)
-        {
-            return scope.CreateObject<T>(new CreateTypeRequest(typeof(T)));
-        }
+            => (T)scope.CreateObjectFromType(typeof(T));
     }
 }
