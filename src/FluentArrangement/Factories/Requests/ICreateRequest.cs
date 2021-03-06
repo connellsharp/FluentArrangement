@@ -61,4 +61,21 @@ namespace FluentArrangement
             return new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
         }
     }
+
+    internal class CreateReturnValueRequest : ICreateRequestWithException
+    {
+        public CreateReturnValueRequest(MethodInfo method)
+        {
+            Method = method;
+        }
+
+        public MethodInfo Method { get; }
+
+        public Type Type => Method.ReturnType;
+
+        public NotCreatedException GetNotCreatedException()
+        {
+            return new NotCreatedException($"Cannot create return value for method '{Method.DeclaringType.Name}.{Method.Name}' of type {Method.ReturnType.Name}.");
+        }
+    }
 }
