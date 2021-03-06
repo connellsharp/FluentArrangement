@@ -37,11 +37,19 @@ namespace FluentArrangement.Tests
         }
 
         [Fact]
-        public void ChildModelHasInnerScopedString()
+        public void InnerScopeModelHasInnerScopedString()
         {
             var result = _fixture.Create<TestParentModel>();
 
             result.ChildModel.Text.Should().Be("InnerScopedString");
+        }
+
+        [Fact]
+        public void ChildModelHasInnerScopedString()
+        {
+            var result = _fixture.Create<TestModel>();
+
+            result.Text.Should().Be("InnerScopedString");
         }
     }
 }

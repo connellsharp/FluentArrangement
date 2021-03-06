@@ -34,5 +34,17 @@ namespace FluentArrangement
 
         public static IFixture UseProxyObjects(this IFixture fixture)
             => fixture.Use(new ProxyObjectFactory());
+
+        public static IFixture UseRandomNumbers(this IFixture fixture)
+            => fixture.Use(new RandomNumberFactory());
+
+        public static IFixture UseRandomStrings(this IFixture fixture)
+            => fixture.Use(new RandomStringFactory());
+
+        public static IFixture UseRandomBooleans(this IFixture fixture)
+            => fixture.Use(new RandomBooleanFactory());
+
+        public static IFixture UseRandomValues(this IFixture fixture)
+            => fixture.UseRandomNumbers().UseRandomBooleans().UseRandomStrings();
     }
 }
