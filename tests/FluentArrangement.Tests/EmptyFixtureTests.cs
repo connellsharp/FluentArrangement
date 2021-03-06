@@ -54,7 +54,7 @@ namespace FluentArrangement.Tests
         {
             Func<int> act = () => _fixture.Create<int>();
 
-            act.Should().Throw<NoFactoryFoundException>();
+            act.Should().Throw<NotCreatedException>();
         }
     }
 }

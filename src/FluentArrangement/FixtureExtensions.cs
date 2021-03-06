@@ -21,7 +21,7 @@ namespace FluentArrangement
 
         public static IFixture UseType<TImplementation, TAbstraction>(this IFixture fixture)
             where TImplementation : TAbstraction
-            => fixture.Use<TAbstraction>(scope => scope.Create<TImplementation>());
+            => fixture.Use<TAbstraction>(scope => scope.CreateObjectFromType<TImplementation>());
 
         // public static IFixture UseParameter<T>(this IFixture fixture, string name, T value)
         //     => fixture.Use(new ParameterFactory<T>(name, value));

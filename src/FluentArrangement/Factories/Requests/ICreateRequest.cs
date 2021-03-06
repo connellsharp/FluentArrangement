@@ -8,7 +8,12 @@ namespace FluentArrangement
         Type Type { get; }
     }
 
-    public class CreateTypeRequest : ICreateRequest
+    internal interface ICreateRequestWithException : ICreateRequest
+    {
+        NotCreatedException GetNotCreatedException();
+    }
+
+    public class CreateTypeRequest : ICreateRequestWithException
     {
         public CreateTypeRequest(Type type)
         {
@@ -16,9 +21,14 @@ namespace FluentArrangement
         }
 
         public Type Type { get; }
+
+        public NotCreatedException GetNotCreatedException()
+        {
+            return new NotCreatedException($"Cannot create type {Type.Name}.");
+        }
     }
 
-    internal class CreatePropertyRequest : ICreateRequest
+    internal class CreatePropertyRequest : ICreateRequestWithException
     {
         public CreatePropertyRequest(PropertyInfo property)
         {
@@ -28,9 +38,14 @@ namespace FluentArrangement
         public PropertyInfo Property { get; }
 
         public Type Type => Property.PropertyType;
+
+        public NotCreatedException GetNotCreatedException()
+        {
+            return new NotCreatedException($"Cannot set property {Property.DeclaringType.Name}.{Property.Name} of type {Property.PropertyType.Name}.");
+        }
     }
 
-    internal class CreateParameterRequest : ICreateRequest
+    internal class CreateParameterRequest : ICreateRequestWithException
     {
         public CreateParameterRequest(ParameterInfo parameter)
         {
@@ -40,5 +55,10 @@ namespace FluentArrangement
         public ParameterInfo Parameter { get; }
 
         public Type Type => Parameter.ParameterType;
+
+        public NotCreatedException GetNotCreatedException()
+        {
+            return new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
+        }
     }
 }

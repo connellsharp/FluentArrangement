@@ -16,9 +16,7 @@ namespace FluentArrangement
 
         public T Create<T>()
         {
-            return _thisScope
-                .Create(new CreateTypeRequest(typeof(T)))
-                .GetRequiredCreatedObject<T>();
+            return _thisScope.CreateObjectFromType<T>();
         }
 
         public IFixture NewScope()

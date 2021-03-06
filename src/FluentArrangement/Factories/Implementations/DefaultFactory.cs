@@ -6,7 +6,10 @@ namespace FluentArrangement
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            var value = request.Type.IsValueType ? Activator.CreateInstance(request.Type) : null;
+            var value = request.Type.IsValueType
+                ? Activator.CreateInstance(request.Type)
+                : null;
+                
             return new CreatedObjectResponse(value);
         }
     }

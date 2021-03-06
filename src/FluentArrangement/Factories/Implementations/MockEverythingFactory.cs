@@ -34,8 +34,8 @@ namespace FluentArrangement
 
             public void Intercept(IInvocation invocation)
             {
-                var value = _scope.Create(new CreateTypeRequest(invocation.Method.ReturnType));
-                invocation.ReturnValue = value.CreatedObject;
+                var createdObject = _scope.CreateObject(new CreateTypeRequest(invocation.Method.ReturnType));
+                invocation.ReturnValue = createdObject;
             }
         }
     }
