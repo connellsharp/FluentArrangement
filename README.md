@@ -12,10 +12,13 @@ public class MyWhateverControllerTests
     public MyWhateverControllerTests()
     {
         _fixture = new Fixture()
-            .UseModels()
-            .UseInterfaceProxies()
+            .UseDefaults()
+            .UseConstructorsAndProperties()
+            .UseProxyObjects()
             .Use<MyType>(c => new MyType(c.Resolve<string>()))
             .UseParameter<string>("userId", "123456")
+            .For<MyOtherType>(f => f
+                .UseRandomValues())
             .Use(new MyCustomFactory());
     }
 

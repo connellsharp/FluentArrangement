@@ -2,7 +2,7 @@ using System;
 
 namespace FluentArrangement
 {
-    public static class FixtureExtensions
+    public static class FixtureUseExtensions
     {
         public static IFixture Use(this IFixture fixture, IFactory factory)
         {

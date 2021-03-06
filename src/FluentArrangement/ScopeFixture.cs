@@ -23,5 +23,7 @@ namespace FluentArrangement
         {
             return new ScopeFixture(_thisScope);
         }
+
+        internal IScope ThisScope => _thisScope;
     }
 }
