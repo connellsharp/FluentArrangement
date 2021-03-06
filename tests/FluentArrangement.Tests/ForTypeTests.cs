@@ -13,7 +13,6 @@ namespace FluentArrangement.Tests
                 .UseConstructorAndSetProperties()
                 .UseInstance<string>("OuterScopedString")
                 .ForType<TestModel>(f => f
-                    .UseConstructorAndSetProperties()
                     .UseInstance<string>("InnerScopedString"));
         }
 

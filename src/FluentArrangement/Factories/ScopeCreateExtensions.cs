@@ -4,7 +4,7 @@ namespace FluentArrangement
     {
         internal static T CreateObject<T>(this IScope scope, ICreateRequestWithException request)
         {
-            var response = scope.Create(request);
+            var response = scope.Create(request, scope);
 
             if(!response.HasCreated)
                 throw request.GetNotCreatedException();

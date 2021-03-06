@@ -15,10 +15,13 @@ namespace FluentArrangement
 
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
+            if(scope == _innerScope)
+                return new NotCreatedResponse();
+
             if(!_filter(request))
                 return new NotCreatedResponse();
 
-            return _innerScope.Create(request);
+            return _innerScope.Create(request, _innerScope);
         }
     }
 }
