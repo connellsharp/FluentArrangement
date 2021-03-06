@@ -28,7 +28,11 @@ namespace FluentArrangement
         private static object CreateObjectOrDefault(ParameterInfo parameter, IScope scope)
         {
             var response = scope.Create(new CreateParameterRequest(parameter));
-            return response.HasCreated ? response.CreatedObject : null;
+
+            if (!response.HasCreated)
+                throw new NoFactoryFoundException($"Cannot set parameter '{parameter.Name}' of type {parameter.ParameterType.Name}.");
+
+            return response.CreatedObject;
         }
 
         private static void Hydrate(object instance, IScope scope)
@@ -41,7 +45,7 @@ namespace FluentArrangement
                 var response = scope.Create(new CreatePropertyRequest(property));
 
                 if (!response.HasCreated)
-                    continue;
+                    throw new NoFactoryFoundException($"Cannot set property {property.DeclaringType.Name}.{property.Name} of type {property.PropertyType.Name}.");
 
                 property.SetValue(instance, response.CreatedObject);
             }

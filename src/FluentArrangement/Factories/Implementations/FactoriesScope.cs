@@ -6,7 +6,7 @@ namespace FluentArrangement
     internal class FactoriesScope : IScope
     {
         private readonly IScope _parentScope;
-        private readonly ICollection<IFactory> _innerFactories;
+        private readonly IList<IFactory> _innerFactories;
 
         public FactoriesScope(IScope parentScope)
         {
@@ -16,7 +16,7 @@ namespace FluentArrangement
 
         public void AddFactory(IFactory factory)
         {
-            _innerFactories.Add(factory);
+            _innerFactories.Insert(0, factory);
         }
 
         public ICreateResponse Create(ICreateRequest request)

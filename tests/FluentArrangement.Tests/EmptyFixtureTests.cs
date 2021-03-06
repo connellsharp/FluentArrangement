@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using Xunit;
 
@@ -46,6 +47,14 @@ namespace FluentArrangement.Tests
             var result = _fixture.Create<string>();
 
             result.Should().Be(text);
+        }
+
+        [Fact]
+        public void ThrowsIfNothingIsRegistered()
+        {
+            Func<int> act = () => _fixture.Create<int>();
+
+            act.Should().Throw<NoFactoryFoundException>();
         }
     }
 }

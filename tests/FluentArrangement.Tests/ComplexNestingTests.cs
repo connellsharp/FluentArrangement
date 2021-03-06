@@ -9,7 +9,8 @@ namespace FluentArrangement.Tests
 
         public ComplexNestingTests()
         {
-            _fixture = new Fixture().UseModels()
+            _fixture = new Fixture().UseDefaults()
+                                    .UseModels()
                                     .UseInterfaceProxies();
         }
 
@@ -22,7 +23,10 @@ namespace FluentArrangement.Tests
 
         public class TestParentModel
         {
-            public TestModel ChildModel { get; set; }
+            public TestParentModel(TestModel childModel)
+                => ChildModel = childModel;
+
+            public TestModel ChildModel { get; }
             
             public string ParentText { get; set; }
         }

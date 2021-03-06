@@ -26,6 +26,9 @@ namespace FluentArrangement
         // public static IFixture UseParameter<T>(this IFixture fixture, string name, T value)
         //     => fixture.Use(new ParameterFactory<T>(name, value));
 
+        public static IFixture UseDefaults(this IFixture fixture)
+            => fixture.Use(new DefaultFactory());
+
         public static IFixture UseModels(this IFixture fixture)
             => fixture.Use(new CtorAndPropsFactory());
 

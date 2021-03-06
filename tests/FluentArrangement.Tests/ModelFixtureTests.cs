@@ -9,7 +9,7 @@ namespace FluentArrangement.Tests
 
         public ModelFixtureTests()
         {
-            _fixture = new Fixture().UseModels();
+            _fixture = new Fixture().UseDefaults().UseModels();
         }
 
         private class TestModel
