@@ -37,7 +37,7 @@ namespace FluentArrangement.Tests
         {
             new object[] { "" },
             new object[] { "Test" },
-            new object[] { "" }
+            new object[] { "This is a longer string that contains more characters" }
         };
 
         [Theory]
