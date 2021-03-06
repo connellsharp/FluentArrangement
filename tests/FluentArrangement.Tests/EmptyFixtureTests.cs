@@ -30,7 +30,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(IntTestCases))]
         public void CreatesNumberUsingRegisteredValue(int number)
         {
-            _fixture.RegisterType<int>(number);
+            _fixture.UseInstance<int>(number);
 
             var result = _fixture.Create<int>();
 
@@ -41,7 +41,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(StringTestCases))]
         public void CreatesStringUsingRegisteredString(string text)
         {
-            _fixture.RegisterType<string>(text);
+            _fixture.UseInstance<string>(text);
 
             var result = _fixture.Create<string>();
 

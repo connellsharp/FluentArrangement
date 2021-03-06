@@ -9,7 +9,7 @@ namespace FluentArrangement.Tests
 
         public ModelFixtureTests()
         {
-            _fixture = new Fixture().Register(new CtorAndPropsFactory());
+            _fixture = new Fixture().UseModels();
         }
 
         private class TestModel
@@ -44,7 +44,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(IntTestCases))]
         public void SetsNumericProperty(int number)
         {
-            _fixture.RegisterType<int>(number);
+            _fixture.UseInstance<int>(number);
 
             var result = _fixture.Create<TestModel>();
 
@@ -55,7 +55,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(IntTestCases))]
         public void SetsNumericPropertiesOnNestedModels(int number)
         {
-            _fixture.RegisterType<int>(number);
+            _fixture.UseInstance<int>(number);
 
             var result = _fixture.Create<TestParentModel>();
 
@@ -66,7 +66,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(StringTestCases))]
         public void SetsStringProperty(string text)
         {
-            _fixture.RegisterType<string>(text);
+            _fixture.UseInstance<string>(text);
 
             var result = _fixture.Create<TestModel>();
 
@@ -77,7 +77,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(StringTestCases))]
         public void SetsStringPropertiesOnNestedModels(string text)
         {
-            _fixture.RegisterType<string>(text);
+            _fixture.UseInstance<string>(text);
 
             var result = _fixture.Create<TestParentModel>();
 

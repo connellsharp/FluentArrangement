@@ -9,7 +9,7 @@ namespace FluentArrangement.Tests
 
         public ScopingTests()
         {
-            _fixture = new Fixture().RegisterType<decimal>(4.2m);
+            _fixture = new Fixture().UseInstance<decimal>(4.2m);
         }
 
         public static object[][] DecimalTestCases = new[]
@@ -43,7 +43,7 @@ namespace FluentArrangement.Tests
         {
             var scopedFixture = _fixture.NewScope();
 
-            scopedFixture.RegisterType<decimal>(number);
+            scopedFixture.UseInstance<decimal>(number);
 
             var result = scopedFixture.Create<decimal>();
 
@@ -55,7 +55,7 @@ namespace FluentArrangement.Tests
         {
             var scopedFixture = _fixture.NewScope();
 
-            scopedFixture.RegisterType<decimal>(13.37m);
+            scopedFixture.UseInstance<decimal>(13.37m);
 
             var result = _fixture.Create<decimal>();
 

@@ -9,7 +9,7 @@ namespace FluentArrangement.Tests
 
         public InterfaceFixtureTests()
         {
-            _fixture = new Fixture().Register(new MockEverythingFactory());
+            _fixture = new Fixture().UseInterfaceProxies();
         }
 
         public interface INumberGenerator
@@ -41,7 +41,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(IntTestCases))]
         public void ProxiedMethodReturnsRegisteredNumber(int number)
         {
-            _fixture.RegisterType<int>(number);
+            _fixture.UseInstance<int>(number);
 
             var generator = _fixture.Create<INumberGenerator>();
             var result = generator.GetNumber();
@@ -53,7 +53,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(IntTestCases))]
         public void ProxiedMethodWithArgReturnsRegisteredNumber(int number)
         {
-            _fixture.RegisterType<int>(number);
+            _fixture.UseInstance<int>(number);
 
             var generator = _fixture.Create<INumberGenerator>();
             var result = generator.GetNumberWithArg(13.37m);
@@ -65,7 +65,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(StringTestCases))]
         public void ProxiedMethodReturnsRegisteredString(string text)
         {
-            _fixture.RegisterType<string>(text);
+            _fixture.UseInstance<string>(text);
 
             var generator = _fixture.Create<INumberGenerator>();
             var result = generator.GetText();
@@ -77,7 +77,7 @@ namespace FluentArrangement.Tests
         [MemberData(nameof(StringTestCases))]
         public void ProxiedPropertyReturnsRegisteredString(string text)
         {
-            _fixture.RegisterType<string>(text);
+            _fixture.UseInstance<string>(text);
 
             var generator = _fixture.Create<INumberGenerator>();
             var result = generator.TextProperty;

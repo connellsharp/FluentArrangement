@@ -9,10 +9,9 @@ namespace FluentArrangement
             _thisScope = new FactoriesScope(parentScope);
         }
 
-        public IFixture Register(IFactory factory)
+        public void Register(IFactory factory)
         {
             _thisScope.AddFactory(factory);
-            return this;
         }
 
         public T Create<T>()

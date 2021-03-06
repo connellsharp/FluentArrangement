@@ -9,8 +9,8 @@ namespace FluentArrangement.Tests
 
         public ComplexNestingTests()
         {
-            _fixture = new Fixture().Register(new CtorAndPropsFactory())
-                                    .Register(new MockEverythingFactory());
+            _fixture = new Fixture().UseModels()
+                                    .UseInterfaceProxies();
         }
 
         public class TestModel
@@ -42,7 +42,7 @@ namespace FluentArrangement.Tests
         [Fact]
         public void GetsNumberThroughSeveralLayersOfNesting()
         {
-            _fixture.RegisterType<int>(9876);
+            _fixture.UseInstance<int>(9876);
 
             var sut = _fixture.Create<ITestInterface>();
 

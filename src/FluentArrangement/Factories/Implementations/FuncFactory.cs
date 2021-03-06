@@ -2,11 +2,11 @@ using System;
 
 namespace FluentArrangement
 {
-    internal class TypeFactory<T> : IFactory
+    internal class FuncFactory<T> : IFactory
     {
-        private readonly Func<T> _func;
+        private readonly Func<IScope, T> _func;
 
-        public TypeFactory(Func<T> func)
+        public FuncFactory(Func<IScope, T> func)
         {
             _func = func;
         }
@@ -15,7 +15,7 @@ namespace FluentArrangement
         {
             if(typeof(T).IsAssignableFrom(request.Type))
             {
-                var obj = _func();
+                var obj = _func(scope);
                 return new CreatedObjectResponse(obj);
             }
 

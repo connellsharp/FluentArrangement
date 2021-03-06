@@ -12,12 +12,11 @@ public class MyWhateverControllerTests
     public MyWhateverControllerTests()
     {
         _fixture = new Fixture()
-            .Register(new CtorAndPropsFactory())
-            .Register(new MockEverythingFactory())
-            .RegisterType<MyType>(c => new MyType(c.Resolve<string>()))
-            .RegisterType<IMyType>(c => c.Resolve<MyType>())
-            .Register(new ParameterFactory<string>("userId", "123456"))
-            .RegisterParameter<string>("userId", "123456");
+            .UseModels()
+            .UseInterfaceProxies()
+            .Use<MyType>(c => new MyType(c.Resolve<string>()))
+            .UseParameter<string>("userId", "123456")
+            .Use(new MyCustomFactory());
     }
 
     [Fact]

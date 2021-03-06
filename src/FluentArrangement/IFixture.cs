@@ -2,7 +2,7 @@ namespace FluentArrangement
 {
     public interface IFixture
     {
-        IFixture Register(IFactory factory);
+        void Register(IFactory factory);
 
         T Create<T>();
 
