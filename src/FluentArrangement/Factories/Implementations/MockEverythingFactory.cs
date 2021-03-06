@@ -3,7 +3,7 @@ using Castle.DynamicProxy;
 
 namespace FluentArrangement
 {
-    public class MockEverythingFactory : IFactory
+    public class ProxyObjectFactory : IFactory
     {
         private bool CanCreateObject(Type type)
         {

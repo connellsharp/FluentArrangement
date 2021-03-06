@@ -10,8 +10,8 @@ namespace FluentArrangement.Tests
         public ComplexNestingTests()
         {
             _fixture = new Fixture().UseDefaults()
-                                    .UseModels()
-                                    .UseInterfaceProxies();
+                                    .UseConstructorAndSetProperties()
+                                    .UseProxyObjects();
         }
 
         public class TestModel

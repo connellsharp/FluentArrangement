@@ -23,9 +23,7 @@ namespace FluentArrangement
         public Type Type { get; }
 
         public NotCreatedException GetNotCreatedException()
-        {
-            return new NotCreatedException($"Cannot create type {Type.Name}.");
-        }
+            => new NotCreatedException($"Cannot create type {Type.Name}.");
     }
 
     internal class CreatePropertyRequest : ICreateRequestWithException
@@ -40,9 +38,7 @@ namespace FluentArrangement
         public Type Type => Property.PropertyType;
 
         public NotCreatedException GetNotCreatedException()
-        {
-            return new NotCreatedException($"Cannot set property {Property.DeclaringType.Name}.{Property.Name} of type {Property.PropertyType.Name}.");
-        }
+            => new NotCreatedException($"Cannot set property {Property.DeclaringType.Name}.{Property.Name} of type {Property.PropertyType.Name}.");
     }
 
     internal class CreateParameterRequest : ICreateRequestWithException
@@ -56,10 +52,8 @@ namespace FluentArrangement
 
         public Type Type => Parameter.ParameterType;
 
-        public NotCreatedException GetNotCreatedException()
-        {
-            return new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
-        }
+        public NotCreatedException GetNotCreatedException() 
+            => new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
     }
 
     internal class CreateReturnValueRequest : ICreateRequestWithException
@@ -74,8 +68,6 @@ namespace FluentArrangement
         public Type Type => Method.ReturnType;
 
         public NotCreatedException GetNotCreatedException()
-        {
-            return new NotCreatedException($"Cannot create return value for method '{Method.DeclaringType.Name}.{Method.Name}' of type {Method.ReturnType.Name}.");
-        }
+            => new NotCreatedException($"Cannot create return value for method '{Method.DeclaringType.Name}.{Method.Name}' of type {Method.ReturnType.Name}.");
     }
 }

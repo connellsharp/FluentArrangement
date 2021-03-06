@@ -29,10 +29,10 @@ namespace FluentArrangement
         public static IFixture UseDefaults(this IFixture fixture)
             => fixture.Use(new DefaultFactory());
 
-        public static IFixture UseModels(this IFixture fixture)
-            => fixture.Use(new CtorAndPropsFactory());
+        public static IFixture UseConstructorAndSetProperties(this IFixture fixture)
+            => fixture.Use(new ConstructorAndPropertiesFactory());
 
-        public static IFixture UseInterfaceProxies(this IFixture fixture)
-            => fixture.Use(new MockEverythingFactory());
+        public static IFixture UseProxyObjects(this IFixture fixture)
+            => fixture.Use(new ProxyObjectFactory());
     }
 }

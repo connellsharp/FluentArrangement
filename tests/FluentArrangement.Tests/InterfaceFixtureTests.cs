@@ -9,7 +9,7 @@ namespace FluentArrangement.Tests
 
         public InterfaceFixtureTests()
         {
-            _fixture = new Fixture().UseInterfaceProxies();
+            _fixture = new Fixture().UseProxyObjects();
         }
 
         public interface INumberGenerator

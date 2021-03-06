@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace FluentArrangement
 {
-    public class CtorAndPropsFactory : IFactory
+    public class ConstructorAndPropertiesFactory : IFactory
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
