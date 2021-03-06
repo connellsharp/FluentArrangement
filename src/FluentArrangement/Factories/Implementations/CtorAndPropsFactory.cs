@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace FluentArrangement
 {
@@ -6,25 +9,47 @@ namespace FluentArrangement
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            if(!IsDtoModelType(request.Type))
+            if (!IsDtoModelType(request.Type))
                 return new NotCreatedResponse();
 
-            var instance = Activator.CreateInstance(request.Type);
+            var ctor = GetBestCtor(request.Type.GetConstructors());
 
-            foreach(var property in request.Type.GetProperties())
+            var args = ctor.GetParameters()
+                .Select(p => CreateObjectOrDefault(p, scope))
+                .ToArray();
+
+            var instance = ctor.Invoke(args);
+
+            Hydrate(instance, scope);
+
+            return new CreatedObjectResponse(instance);
+        }
+
+        private static object CreateObjectOrDefault(ParameterInfo parameter, IScope scope)
+        {
+            var response = scope.Create(new CreateParameterRequest(parameter));
+            return response.HasCreated ? response.CreatedObject : null;
+        }
+
+        private static void Hydrate(object instance, IScope scope)
+        {
+            foreach (var property in instance.GetType().GetProperties())
             {
-                if(!property.CanWrite)
+                if (!property.CanWrite)
                     continue;
 
                 var response = scope.Create(new CreatePropertyRequest(property));
 
-                if(!response.HasCreated)
+                if (!response.HasCreated)
                     continue;
 
                 property.SetValue(instance, response.CreatedObject);
             }
+        }
 
-            return new CreatedObjectResponse(instance);
+        private ConstructorInfo GetBestCtor(IEnumerable<ConstructorInfo> constructors)
+        {
+            return constructors.OrderBy(c => c.GetParameters().Length).First();
         }
 
         private bool IsDtoModelType(Type type)

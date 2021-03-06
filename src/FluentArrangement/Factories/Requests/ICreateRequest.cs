@@ -29,4 +29,16 @@ namespace FluentArrangement
 
         public Type Type => Property.PropertyType;
     }
+
+    internal class CreateParameterRequest : ICreateRequest
+    {
+        public CreateParameterRequest(ParameterInfo parameter)
+        {
+            Parameter = parameter;
+        }
+
+        public ParameterInfo Parameter { get; }
+
+        public Type Type => Parameter.ParameterType;
+    }
 }
