@@ -6,14 +6,11 @@ namespace FluentArrangement
     public interface ICreateRequest
     {
         Type Type { get; }
-    }
 
-    internal interface ICreateRequestWithException : ICreateRequest
-    {
         NotCreatedException GetNotCreatedException();
     }
 
-    public class CreateTypeRequest : ICreateRequestWithException
+    public class CreateTypeRequest : ICreateRequest
     {
         public CreateTypeRequest(Type type)
         {
@@ -26,7 +23,7 @@ namespace FluentArrangement
             => new NotCreatedException($"Cannot create type {Type.Name}.");
     }
 
-    internal class CreatePropertyRequest : ICreateRequestWithException
+    public class CreatePropertyRequest : ICreateRequest
     {
         public CreatePropertyRequest(PropertyInfo property)
         {
@@ -41,7 +38,7 @@ namespace FluentArrangement
             => new NotCreatedException($"Cannot set property {Property.DeclaringType.Name}.{Property.Name} of type {Property.PropertyType.Name}.");
     }
 
-    internal class CreateParameterRequest : ICreateRequestWithException
+    public class CreateParameterRequest : ICreateRequest
     {
         public CreateParameterRequest(ParameterInfo parameter)
         {
@@ -56,7 +53,7 @@ namespace FluentArrangement
             => new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
     }
 
-    internal class CreateReturnValueRequest : ICreateRequestWithException
+    public class CreateReturnValueRequest : ICreateRequest
     {
         public CreateReturnValueRequest(MethodInfo method)
         {

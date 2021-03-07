@@ -9,7 +9,7 @@ namespace FluentArrangement
         object CreatedObject { get; }
     }
 
-    internal class CreatedObjectResponse : ICreateResponse
+    public class CreatedObjectResponse : ICreateResponse
     {
         public CreatedObjectResponse(object obj)
         {
@@ -21,7 +21,7 @@ namespace FluentArrangement
         public object CreatedObject { get; }
     }
 
-    internal class CreatedVoidResponse : ICreateResponse
+    public class CreatedVoidResponse : ICreateResponse
     {
         public bool HasCreated => true;
 

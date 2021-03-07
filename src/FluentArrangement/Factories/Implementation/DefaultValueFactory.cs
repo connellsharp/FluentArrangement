@@ -2,7 +2,7 @@ using System;
 
 namespace FluentArrangement
 {
-    public class DefaultValueFactory : IFactory
+    internal class DefaultValueFactory : IFactory
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {

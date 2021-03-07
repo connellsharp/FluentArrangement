@@ -7,7 +7,7 @@ namespace FluentArrangement
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            if (!IsModelType(request.Type) || !CanInstantiate(request.Type))
+            if (!CanInstantiate(request.Type))
                 return new NotCreatedResponse();
 
             object instance = Instantiate(request.Type, scope);
@@ -16,11 +16,11 @@ namespace FluentArrangement
             return new CreatedObjectResponse(instance);
         }
 
-        private bool IsModelType(Type type)
-            => !type.IsAbstract && !type.IsPrimitive && type != typeof(string);
-
         private bool CanInstantiate(Type type)
-            => type.GetConstructors().Any();
+            => !type.IsAbstract
+            && !type.IsPrimitive
+            && type != typeof(string)
+            && type.GetConstructors().Any();
 
         private object Instantiate(Type type, IScope scope)
         {
