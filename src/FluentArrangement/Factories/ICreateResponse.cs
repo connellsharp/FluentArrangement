@@ -21,6 +21,13 @@ namespace FluentArrangement
         public object CreatedObject { get; }
     }
 
+    internal class CreatedVoidResponse : ICreateResponse
+    {
+        public bool HasCreated => true;
+
+        public object CreatedObject => null;
+    }
+
     public class NotCreatedResponse : ICreateResponse
     {
         public bool HasCreated => false;

@@ -10,11 +10,11 @@ namespace FluentArrangement
 
         IFixture NewScope();
     }
-    
+
     public class Fixture : ScopeFixture
     {
         public Fixture()
-            : base(new EmptyScope())
+            : base(new TopLevelScope())
         {
         }
     }

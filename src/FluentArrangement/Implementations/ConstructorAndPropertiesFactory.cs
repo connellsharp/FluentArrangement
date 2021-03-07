@@ -7,23 +7,24 @@ namespace FluentArrangement
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            if (!IsModelType(request.Type))
+            if (!IsModelType(request.Type) || !CanInstantiate(request.Type))
                 return new NotCreatedResponse();
 
-            object instance = Instantiate(request, scope);
+            object instance = Instantiate(request.Type, scope);
             Hydrate(instance, scope);
 
             return new CreatedObjectResponse(instance);
         }
 
         private bool IsModelType(Type type)
-        {
-            return !type.IsAbstract && !type.IsPrimitive && type != typeof(string);
-        }
+            => !type.IsAbstract && !type.IsPrimitive && type != typeof(string);
 
-        private object Instantiate(ICreateRequest request, IScope scope)
+        private bool CanInstantiate(Type type)
+            => type.GetConstructors().Any();
+
+        private object Instantiate(Type type, IScope scope)
         {
-            var shortestCtor = request.Type.GetConstructors()
+            var shortestCtor = type.GetConstructors()
                                            .OrderBy(c => c.GetParameters().Length)
                                            .First();
 
