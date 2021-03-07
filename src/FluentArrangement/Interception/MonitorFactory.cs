@@ -2,21 +2,20 @@ using Castle.DynamicProxy;
 
 namespace FluentArrangement
 {
-    public class MonitorFactory<T> : IFactory
+    internal class MonitorFactory<T> : IFactory
         where T : class
     {
-        private readonly Monitor<T> _monitor = new Monitor<T>();
-        private readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
+        private readonly ProxyGenerator _proxyGenerator;
+        private readonly Monitor<T> _monitor;
 
-        internal MonitorFactory()
+        internal MonitorFactory(Monitor<T> monitor)
         {
+            _proxyGenerator = new ProxyGenerator();
+            _monitor = monitor;
         }
-        
+
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            if(request.Type == typeof(Monitor<T>))
-                return new CreatedObjectResponse(_monitor);
-
             if (request.Type == typeof(T))
                 return new CreatedObjectResponse(GenerateProxy(scope));
 

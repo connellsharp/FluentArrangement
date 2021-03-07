@@ -4,7 +4,12 @@ namespace FluentArrangement
     {
         public static Monitor<T> Monitor<T>(this IFixture fixture)
             where T : class
-            => fixture.Use(new MonitorFactory<T>())
-                      .Create<Monitor<T>>();
+        {
+            var monitor = new Monitor<T>();
+
+            fixture.Use(new MonitorFactory<T>(monitor));
+
+            return monitor;
+        }
     }
 }
