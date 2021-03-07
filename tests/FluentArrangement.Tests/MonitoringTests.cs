@@ -42,9 +42,13 @@ namespace FluentArrangement.Tests
             var repoMonitor = _fixture.Monitor<ITestRepository>();
 
             var controller = _fixture.Create<TestController>();
+            
             controller.Post(number);
 
-            repoMonitor.CallsTo("Add").Should().ContainSingle();
+            repoMonitor.CallsTo(nameof(ITestRepository.Add)).Should().ContainSingle()
+                .Which.Arguments.Should().ContainSingle()
+                .Which.Value.Should().BeOfType<TestEntity>()
+                .Which.TestNumber.Should().Be(number);
         }
     }
 }

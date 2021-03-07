@@ -1,39 +1,51 @@
 # FluentArrangement
 
-*This project is still just an idea at the moment.*
-
 FluentArrangement is a DI container designed for use in the 'arrange' phase of a unit test.
 
+It can be used to generate random tests models and auto mocking.
+
+
 ```c#
-public class MyWhateverControllerTests
+public class MyControllerTests
 {
     private readonly IFixture _fixture;
 
-    public MyWhateverControllerTests()
+    public MyControllerTests()
     {
         _fixture = new Fixture()
             .UseDefaults()
             .UseConstructorsAndProperties()
             .UseProxyObjects()
-            .Use<MyType>(c => new MyType(c.Resolve<string>()))
-            .UseParameter<string>("userId", "123456")
             .For<MyOtherType>(f => f
                 .UseRandomValues())
+            .UseParameter<string>("userId", "123456")
             .Use(new MyCustomFactory());
     }
 
     [Fact]
     public Task GetReturns200WhenFlagIsTrue()
     {
-        Given.The<ITestRepository>.Returns(new TestObject());
-        Given.The<MySettings>.HasProperty(s => s.MyFlag).SetTo(true);
+        _fixture.UseProperty<MySettings>(s => s.MyFlag, true);
 
-        var request = _fixture.Create<MyWhateverRequest>();
-        var controller = _fixture.Create<MyWhateverController>();
+        var request = _fixture.Create<MyRequest>();
+        var controller = _fixture.Create<MyController>();
 
         var result = await controller.GetAsync("id");
 
         Assert.Equals(200, result.StatusCode);
+    }
+
+    [Fact]
+    public Task GetCallsRepositoryOnce()
+    {
+        var monitor = _fixture.Monitor<IMyRepository>();
+
+        var request = _fixture.Create<MyRequest>();
+        var controller = _fixture.Create<MyController>();
+
+        var result = await controller.GetAsync("id");
+
+        Assert.Single(monitor.CallsTo("Get"));
     }
 }
 ```
