@@ -23,9 +23,6 @@ namespace FluentArrangement
             where TImplementation : TAbstraction
             => fixture.Use<TAbstraction>(sp => sp.GetService<TImplementation>());
 
-        // public static IFixture UseParameter<T>(this IFixture fixture, string name, T value)
-        //     => fixture.Use(new ParameterFactory<T>(name, value));
-
         public static IFixture UseDefaults(this IFixture fixture)
             => fixture.Use(new DefaultValueFactory());
 
@@ -46,5 +43,23 @@ namespace FluentArrangement
 
         public static IFixture UseRandomValues(this IFixture fixture)
             => fixture.UseRandomNumbers().UseRandomBooleans().UseRandomStrings();
+
+        public static IFixture UseCompletedTasks(this IFixture fixture)
+            => fixture.Use(new CompletedTaskFactory());
+
+        public static IFixture UseDefaultCancellationTokens(this IFixture fixture)
+            => fixture.Use(new DefaultCancellationTokenFactory());
+
+        public static IFixture UseNullables(this IFixture fixture)
+            => fixture.Use(new NullableNotNullFactory());
+
+        public static IFixture UseEnumerables(this IFixture fixture)
+            => fixture.Use(new EnumerableFactory());
+
+        public static IFixture UseAsync(this IFixture fixture)
+            => fixture.UseCompletedTasks().UseDefaultCancellationTokens();
+
+        public static IFixture UseUnderlyingTypes(this IFixture fixture)
+            => fixture.UseCompletedTasks().UseNullables().UseEnumerables();
     }
 }
