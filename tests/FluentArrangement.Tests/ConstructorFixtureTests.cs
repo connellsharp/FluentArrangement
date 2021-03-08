@@ -5,12 +5,7 @@ namespace FluentArrangement.Tests
 {
     public class ConstructorFixtureTests
     {
-        private readonly IFixture _fixture;
-
-        public ConstructorFixtureTests()
-        {
-            _fixture = new Fixture().UseDefaults().UseConstructorAndSetProperties();
-        }
+        private readonly IFixture _fixture = new Fixture().UseDefaults().UseConstructorAndSetProperties();
 
         private class TestModel
         {

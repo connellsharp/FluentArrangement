@@ -5,13 +5,8 @@ namespace FluentArrangement.Tests
 {
     public class MonitoringTests
     {
-        private readonly IFixture _fixture;
-
-        public MonitoringTests()
-        {
-            _fixture = new Fixture().UseConstructorAndSetProperties()
-                                    .UseProxyObjects();
-        }
+        private readonly IFixture _fixture = new Fixture().UseConstructorAndSetProperties()
+                                                          .UseProxyObjects();
 
         public class TestEntity
         {

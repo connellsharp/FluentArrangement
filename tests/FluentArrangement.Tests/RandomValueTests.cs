@@ -7,12 +7,7 @@ namespace FluentArrangement.Tests
 {
     public class RandomValueTests
     {
-        private readonly IFixture _fixture;
-
-        public RandomValueTests()
-        {
-            _fixture = new Fixture().UseRandomValues();
-        }
+        private readonly IFixture _fixture = new Fixture().UseRandomValues();
 
         [Theory]
         [InlineData(typeof(string))]

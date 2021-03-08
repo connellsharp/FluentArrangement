@@ -5,12 +5,7 @@ namespace FluentArrangement.Tests
 {
     public class ScopingTests
     {
-        private readonly IFixture _fixture;
-
-        public ScopingTests()
-        {
-            _fixture = new Fixture().UseInstance<decimal>(4.2m);
-        }
+        private readonly IFixture _fixture = new Fixture().UseInstance<decimal>(4.2m);
 
         public static object[][] DecimalTestCases = new[]
         {

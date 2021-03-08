@@ -5,16 +5,11 @@ namespace FluentArrangement.Tests
 {
     public class ForTypeTests
     {
-        private readonly IFixture _fixture;
-
-        public ForTypeTests()
-        {
-            _fixture = new Fixture()
+        private readonly IFixture _fixture = new Fixture()
                 .UseConstructorAndSetProperties()
                 .UseInstance<string>("OuterScopedString")
                 .ForType<TestModel>(f => f
                     .UseInstance<string>("InnerScopedString"));
-        }
 
         private class TestModel
         {

@@ -5,14 +5,9 @@ namespace FluentArrangement.Tests
 {
     public class ComplexNestingTests
     {
-        private readonly IFixture _fixture;
-
-        public ComplexNestingTests()
-        {
-            _fixture = new Fixture().UseDefaults()
-                                    .UseConstructorAndSetProperties()
-                                    .UseProxyObjects();
-        }
+        private readonly IFixture _fixture = new Fixture().UseDefaults()
+                                                          .UseConstructorAndSetProperties()
+                                                          .UseProxyObjects();
 
         public class TestModel
         {

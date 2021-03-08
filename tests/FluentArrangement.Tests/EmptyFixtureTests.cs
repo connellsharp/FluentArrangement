@@ -6,12 +6,7 @@ namespace FluentArrangement.Tests
 {
     public class EmptyFixtureTests
     {
-        private readonly IFixture _fixture;
-
-        public EmptyFixtureTests()
-        {
-            _fixture = new Fixture();
-        }
+        private readonly IFixture _fixture = new Fixture();
 
         public static object[][] IntTestCases = new[]
         {

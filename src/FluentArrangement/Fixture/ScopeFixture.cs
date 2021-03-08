@@ -5,6 +5,8 @@ namespace FluentArrangement
     public class ScopeFixture : IFixture
     {
         private FactoriesScope _thisScope;
+        
+        internal IScope ThisScope => _thisScope;
 
         internal ScopeFixture(IScope parentScope)
         {
@@ -25,7 +27,5 @@ namespace FluentArrangement
         {
             return new ScopeFixture(_thisScope);
         }
-
-        internal IScope ThisScope => _thisScope;
     }
 }

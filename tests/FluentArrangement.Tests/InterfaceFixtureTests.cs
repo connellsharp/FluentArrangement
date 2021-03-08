@@ -5,12 +5,7 @@ namespace FluentArrangement.Tests
 {
     public class InterfaceFixtureTests
     {
-        private readonly IFixture _fixture;
-
-        public InterfaceFixtureTests()
-        {
-            _fixture = new Fixture().UseProxyObjects();
-        }
+        private readonly IFixture _fixture = new Fixture().UseProxyObjects();
 
         public interface INumberGenerator
         {
