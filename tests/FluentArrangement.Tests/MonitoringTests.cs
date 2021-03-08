@@ -45,5 +45,22 @@ namespace FluentArrangement.Tests
                 .Which.Value.Should().BeOfType<TestEntity>()
                 .Which.TestNumber.Should().Be(number);
         }
+
+        [Theory]
+        [InlineData(6)]
+        [InlineData(71)]
+        public void MonitorsMultipleIdenticalMethodCalls(int count)
+        {
+            var repoMonitor = _fixture.Monitor<ITestRepository>();
+
+            var controller = _fixture.Create<TestController>();
+            
+            for(int i = 0; i < count; i++)
+            {
+                controller.Post(7654);
+            }
+
+            repoMonitor.CallsTo(nameof(ITestRepository.Add)).Should().HaveCount(count);
+        }
     }
 }
