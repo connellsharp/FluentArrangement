@@ -8,10 +8,12 @@ namespace FluentArrangement
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {
-            if (!request.Type.InheritsGenericInterface(typeof(IEnumerable<>)))
+            var enumerableInterfaceType = request.Type.GetGenericInterface(typeof(IEnumerable<>));
+
+            if (enumerableInterfaceType == null)
                 return new NotCreatedResponse();
 
-            var innerType = request.Type.GetGenericInterface(typeof(IEnumerable<>)).GenericTypeArguments[0];
+            var innerType = enumerableInterfaceType.GenericTypeArguments[0];
 
             var enumerable = Activator.CreateInstance(typeof(FactoryEnumerable<>).MakeGenericType(innerType), scope);
 
@@ -20,7 +22,7 @@ namespace FluentArrangement
             return new CreatedObjectResponse(createdObject);
         }
 
-        private class FactoryEnumerable<T> : IEnumerable<T>
+        private class FactoryEnumerable<T> : IEnumerable<T?>
         {
             private readonly IScope _scope;
 
@@ -29,7 +31,7 @@ namespace FluentArrangement
                 _scope = scope;
             }
 
-            public IEnumerator<T> GetEnumerator()
+            public IEnumerator<T?> GetEnumerator()
             {
                 yield return _scope.CreateObjectFromType<T>();
             }

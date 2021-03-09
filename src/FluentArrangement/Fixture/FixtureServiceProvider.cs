@@ -9,7 +9,7 @@ namespace FluentArrangement
         public ScopeServiceProvider(IScope scope)
             => _scope = scope;
 
-        public object GetService(Type serviceType)
+        public object? GetService(Type serviceType)
             => _scope.CreateObjectFromType(serviceType);
     }
 }

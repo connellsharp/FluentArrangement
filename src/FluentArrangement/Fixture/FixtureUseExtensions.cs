@@ -10,7 +10,7 @@ namespace FluentArrangement
             return fixture;
         }
 
-        public static IFixture Use<T>(this IFixture fixture, Func<IServiceProvider, T> func)
+        public static IFixture Use<T>(this IFixture fixture, Func<IServiceProvider, T?> func)
             => fixture.Use(new FuncFactory<T>(scope => func(new ScopeServiceProvider(scope))));
 
         public static IFixture Use<T>(this IFixture fixture, Func<T> func)

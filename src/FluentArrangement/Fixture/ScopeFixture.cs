@@ -18,7 +18,7 @@ namespace FluentArrangement
             _thisScope.AddFactory(factory);
         }
 
-        public object Create(Type type)
+        public object? Create(Type type)
         {
             return _thisScope.CreateObjectFromType(type);
         }

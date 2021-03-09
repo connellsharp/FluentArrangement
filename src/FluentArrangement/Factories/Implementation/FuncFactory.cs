@@ -4,9 +4,9 @@ namespace FluentArrangement
 {
     internal class FuncFactory<T> : IFactory
     {
-        private readonly Func<IScope, T> _func;
+        private readonly Func<IScope, T?> _func;
 
-        public FuncFactory(Func<IScope, T> func)
+        public FuncFactory(Func<IScope, T?> func)
         {
             _func = func;
         }

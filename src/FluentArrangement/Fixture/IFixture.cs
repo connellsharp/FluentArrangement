@@ -6,7 +6,7 @@ namespace FluentArrangement
     {
         void Register(IFactory factory);
 
-        object Create(Type type);
+        object? Create(Type type);
 
         IFixture NewScope();
     }

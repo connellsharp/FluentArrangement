@@ -48,7 +48,7 @@ namespace FluentArrangement.Tests
 
         [Theory]
         [InlineData(6)]
-        [InlineData(71)]
+        [InlineData(17)]
         public void MonitorsMultipleIdenticalMethodCalls(int count)
         {
             var repoMonitor = _fixture.Monitor<ITestRepository>();
