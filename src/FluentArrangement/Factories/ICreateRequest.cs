@@ -35,7 +35,7 @@ namespace FluentArrangement
         public Type Type => Property.PropertyType;
 
         public NotCreatedException GetNotCreatedException()
-            => new NotCreatedException($"Cannot set property {Property.DeclaringType.Name}.{Property.Name} of type {Property.PropertyType.Name}.");
+            => new NotCreatedException($"Cannot set property {Property.DeclaringType?.Name ?? "global"}.{Property.Name} of type {Property.PropertyType.Name}.");
     }
 
     public class CreateParameterRequest : ICreateRequest
@@ -65,6 +65,6 @@ namespace FluentArrangement
         public Type Type => Method.ReturnType;
 
         public NotCreatedException GetNotCreatedException()
-            => new NotCreatedException($"Cannot create return value for method '{Method.DeclaringType.Name}.{Method.Name}' of type {Method.ReturnType.Name}.");
+            => new NotCreatedException($"Cannot create return value for method '{Method.DeclaringType?.Name ?? "global"}.{Method.Name}' of type {Method.ReturnType.Name}.");
     }
 }

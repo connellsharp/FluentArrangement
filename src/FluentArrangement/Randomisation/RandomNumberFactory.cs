@@ -21,7 +21,7 @@ namespace FluentArrangement
             return new CreatedObjectResponse(randomValue);
         }
 
-        private object GenerateRandomValue(Type type)
+        private object? GenerateRandomValue(Type type)
         {
             switch (Type.GetTypeCode(type))
             {

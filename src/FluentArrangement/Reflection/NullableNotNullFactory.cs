@@ -9,7 +9,7 @@ namespace FluentArrangement
             if (!request.Type.IsOfGenericTypeDefinition(typeof(Nullable<>)))
                 return new NotCreatedResponse();
 
-            var innerType = Nullable.GetUnderlyingType(request.Type);
+            var innerType = Nullable.GetUnderlyingType(request.Type) ?? throw new Exception("Error finding underlying nullable type");
 
             var createdObject = scope.CreateObjectFromType(innerType);
 
