@@ -46,20 +46,21 @@ public Task GetReturns200WhenFlagIsTrue()
 }
 ```
 
-Create Monitor classes to verify calls to dependencies.
+All requests are monitored, allowing you to verify calls to dependencies.
+
 Combine with [FluentAssertions](https://fluentassertions.com/) for maximum fluentness.
 
 ```c#
 [Fact]
 public Task GetCallsRepositoryOnce()
 {
-    var monitor = Fixture.Monitor<IMyRepository>();
-
     var controller = Fixture.Create<MyController>();
 
     var result = await controller.GetAsync("id");
 
-    monitor.CallsTo(nameof(IMyRepository.Get)).Should().ContainSingle()
-        .Which.Arguments.First().Should().Be("id");
+    Fixture.Requests.GetMethodCalls()
+        .ToType<IMyRepository>()
+        .Should().ContainSingle()
+        .Which.Method.Name.Should().Be("Add");
 }
 ```
