@@ -17,9 +17,9 @@ namespace FluentArrangement
             Interceptor = new MonitoringInterceptor();
         }
 
-        public IEnumerable<MonitorCall> AllCalls => Interceptor.AllCalls;
+        public IEnumerable<MonitoredMethodCall> AllCalls => Interceptor.AllCalls;
 
-        public IEnumerable<MonitorCall> CallsTo(string methodName)
+        public IEnumerable<MonitoredMethodCall> CallsTo(string methodName)
             => AllCalls.Where(c => c.Method.Name == methodName);
     }
 }

@@ -7,18 +7,17 @@ namespace FluentArrangement
 {
     internal class MonitoringInterceptor : IInterceptor
     {
-        private IList<MonitorCall> _allCalls = new List<MonitorCall>();
-        public IEnumerable<MonitorCall> AllCalls => _allCalls;
+        private IList<MonitoredMethodCall> _allCalls = new List<MonitoredMethodCall>();
+        public IEnumerable<MonitoredMethodCall> AllCalls => _allCalls;
 
         public void Intercept(IInvocation invocation)
         {
             invocation.Proceed();
             
-            _allCalls.Add(new MonitorCall
+            _allCalls.Add(new MonitoredMethodCall
             {
                 Method = invocation.Method,
-                Arguments = invocation.Method.GetParameters()
-                            .Zip(invocation.Arguments, (p, a) => new KeyValuePair<ParameterInfo, object>(p, a)),
+                Arguments = invocation.Arguments,
                 ReturnValue = invocation.ReturnValue
             });
         }

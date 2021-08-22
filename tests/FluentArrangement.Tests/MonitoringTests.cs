@@ -38,10 +38,12 @@ namespace FluentArrangement.Tests
             
             controller.Post(number);
 
-            _fixture.Requests.Requests.GetMethodCalls()
+            _fixture.Requests.GetMethodCalls()
+                .ForType<ITestRepository>()
+                .ToMethod(nameof(ITestRepository.Add))
                 .Should().ContainSingle()
                 .Which.Arguments.Should().ContainSingle()
-                .Which.Value.Should().BeOfType<TestEntity>()
+                .Which.Should().BeOfType<TestEntity>()
                 .Which.TestNumber.Should().Be(number);
         }
 
@@ -50,8 +52,6 @@ namespace FluentArrangement.Tests
         [InlineData(17)]
         public void MonitorsMultipleIdenticalMethodCalls(int count)
         {
-            var repoMonitor = _fixture.Monitor<ITestRepository>();
-
             var controller = _fixture.Create<TestController>();
             
             for(int i = 0; i < count; i++)
@@ -59,7 +59,10 @@ namespace FluentArrangement.Tests
                 controller.Post(7654);
             }
 
-            repoMonitor.CallsTo(nameof(ITestRepository.Add)).Should().HaveCount(count);
+            _fixture.Requests.GetMethodCalls()
+                .ForType<ITestRepository>()
+                .ToMethod(nameof(ITestRepository.Add))
+                .Should().HaveCount(count);
         }
     }
 }
