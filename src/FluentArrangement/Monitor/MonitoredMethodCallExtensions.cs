@@ -7,7 +7,7 @@ namespace FluentArrangement
     {
         public static IEnumerable<MonitoredMethodCall> GetMethodCalls(this IEnumerable<MonitoredRequest> requests)
             => from request in requests
-               let methodRequest = request.Request as CreateReturnValueRequest
+               let methodRequest = request.Request as InvokeMethodRequest
                where methodRequest != null
                select new MonitoredMethodCall
                {

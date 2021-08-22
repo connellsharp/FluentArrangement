@@ -24,9 +24,9 @@ namespace FluentArrangement
             => new NotCreatedException($"Cannot create type {Type.Name}.");
     }
 
-    public class CreatePropertyRequest : ICreateRequest
+    public class SetPropertyRequest : ICreateRequest
     {
-        public CreatePropertyRequest(PropertyInfo property)
+        public SetPropertyRequest(PropertyInfo property)
         {
             Property = property;
         }
@@ -36,12 +36,12 @@ namespace FluentArrangement
         public Type Type => Property.PropertyType;
 
         public NotCreatedException GetNotCreatedException()
-            => new NotCreatedException($"Cannot set property {Property.DeclaringType?.Name ?? "global"}.{Property.Name} of type {Property.PropertyType.Name}.");
+            => new NotCreatedException($"Cannot create a value for property {Property.DeclaringType?.Name ?? "global"}.{Property.Name} of type {Property.PropertyType.Name}.");
     }
 
-    public class CreateParameterRequest : ICreateRequest
+    public class PassParameterRequest : ICreateRequest
     {
-        public CreateParameterRequest(ParameterInfo parameter)
+        public PassParameterRequest(ParameterInfo parameter)
         {
             Parameter = parameter;
         }
@@ -51,12 +51,12 @@ namespace FluentArrangement
         public Type Type => Parameter.ParameterType;
 
         public NotCreatedException GetNotCreatedException() 
-            => new NotCreatedException($"Cannot set parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
+            => new NotCreatedException($"Cannot create a value for parameter '{Parameter.Name}' of type {Parameter.ParameterType.Name}.");
     }
 
-    public class CreateReturnValueRequest : ICreateRequest
+    public class InvokeMethodRequest : ICreateRequest
     {
-        public CreateReturnValueRequest(MethodInfo method, IEnumerable<object> arguments)
+        public InvokeMethodRequest(MethodInfo method, IEnumerable<object> arguments)
         {
             Method = method;
             Arguments = arguments;

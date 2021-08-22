@@ -29,7 +29,7 @@ namespace FluentArrangement
                                            .First();
 
             var args = shortestCtor.GetParameters()
-                .Select(p => scope.CreateObject(new CreateParameterRequest(p)))
+                .Select(p => scope.CreateObject(new PassParameterRequest(p)))
                 .ToArray();
 
             var instance = shortestCtor.Invoke(args);
@@ -43,7 +43,7 @@ namespace FluentArrangement
                 if (!property.CanWrite)
                     continue;
 
-                var createdObject = scope.CreateObject(new CreatePropertyRequest(property));
+                var createdObject = scope.CreateObject(new SetPropertyRequest(property));
 
                 property.SetValue(instance, createdObject);
             }
