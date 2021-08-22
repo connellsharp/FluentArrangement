@@ -1,8 +1,6 @@
-using System;
-
 namespace FluentArrangement
 {
-    internal class TopLevelScope : IScope
+    internal class VoidFactory : IFactory
     {
         public ICreateResponse Create(ICreateRequest request, IScope scope)
         {

@@ -14,7 +14,7 @@ namespace FluentArrangement
     public class Fixture : ScopeFixture
     {
         public Fixture()
-            : base(new TopLevelScope())
+            : base(new FactoryScope(new VoidFactory()))
         {
         }
     }

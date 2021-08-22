@@ -4,18 +4,20 @@ namespace FluentArrangement
 {
     public class ScopeFixture : IFixture
     {
-        private FactoriesScope _thisScope;
+        private AggregateFactory _aggregateFactory;
+        private ChildScope _thisScope;
         
         internal IScope ThisScope => _thisScope;
 
         internal ScopeFixture(IScope parentScope)
         {
-            _thisScope = new FactoriesScope(parentScope);
+            _aggregateFactory = new AggregateFactory();
+            _thisScope = new ChildScope(parentScope, _aggregateFactory);
         }
 
         public void Register(IFactory factory)
         {
-            _thisScope.AddFactory(factory);
+            _aggregateFactory.AddFactory(factory);
         }
 
         public object? Create(Type type)

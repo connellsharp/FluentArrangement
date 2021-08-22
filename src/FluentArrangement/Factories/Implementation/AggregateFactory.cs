@@ -2,16 +2,9 @@ using System.Collections.Generic;
 
 namespace FluentArrangement
 {
-    internal class FactoriesScope : IScope
+    internal class AggregateFactory : IFactory
     {
-        private readonly IScope _parentScope;
-        private readonly IList<IFactory> _innerFactories;
-
-        public FactoriesScope(IScope parentScope)
-        {
-            _parentScope = parentScope;
-            _innerFactories = new List<IFactory>();
-        }
+        private readonly IList<IFactory> _innerFactories = new List<IFactory>();
 
         public void AddFactory(IFactory factory)
         {
@@ -28,7 +21,7 @@ namespace FluentArrangement
                     return response;
             }
 
-            return _parentScope.Create(request, creationScope);
+            return new NotCreatedResponse();
         }
     }
 }
