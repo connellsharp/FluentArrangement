@@ -21,7 +21,12 @@ namespace FluentArrangement
             if(!_filter(request))
                 return new NotCreatedResponse();
 
-            return _innerScope.Create(request, _innerScope);
+            var obj = _innerScope.CreateObject(request);
+
+            if(obj != null)
+                return new CreatedObjectResponse(obj);
+
+            return new NotCreatedResponse();
         }
     }
 }

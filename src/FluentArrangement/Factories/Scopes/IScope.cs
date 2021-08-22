@@ -2,6 +2,6 @@ namespace FluentArrangement
 {
     public interface IScope
     {
-        ICreateResponse Create(ICreateRequest request, IScope scope);
+        object? CreateObject(ICreateRequest request, IScope scope);
     }
 }
