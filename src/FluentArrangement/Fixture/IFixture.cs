@@ -6,16 +6,10 @@ namespace FluentArrangement
     {
         void Register(IFactory factory);
 
+        IFixture NewScope();
+
         object? Create(Type type);
 
-        IFixture NewScope();
-    }
-
-    public class Fixture : ScopeFixture
-    {
-        public Fixture()
-            : base(new FactoryScope(new VoidFactory(), new EmptyScope()))
-        {
-        }
+        RequestCollection Requests { get; }
     }
 }

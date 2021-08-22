@@ -14,14 +14,17 @@ namespace FluentArrangement
             _parentScope = parentScope;
         }
 
+        public RequestCollection Requests => _parentScope.Requests;
+
         public object? CreateObject(ICreateRequest request, IScope creationScope)
         {
             var response = _factory.Create(request, creationScope);
 
-            if(response.HasCreated)
-                return response.CreatedObject;
+            if (!response.HasCreated)
+                return _parentScope.CreateObject(request, creationScope);
 
-            return _parentScope.CreateObject(request, creationScope);
+            Requests.Log(request, response);
+            return response.CreatedObject;
         }
     }
 }

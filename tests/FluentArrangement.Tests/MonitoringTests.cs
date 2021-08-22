@@ -34,13 +34,12 @@ namespace FluentArrangement.Tests
         [InlineData(1337)]
         public void MonitorsMethodCall(int number)
         {
-            var repoMonitor = _fixture.Monitor<ITestRepository>();
-
             var controller = _fixture.Create<TestController>();
             
             controller.Post(number);
 
-            repoMonitor.CallsTo(nameof(ITestRepository.Add)).Should().ContainSingle()
+            _fixture.Requests.Requests.GetMethodCalls()
+                .Should().ContainSingle()
                 .Which.Arguments.Should().ContainSingle()
                 .Which.Value.Should().BeOfType<TestEntity>()
                 .Which.TestNumber.Should().Be(number);

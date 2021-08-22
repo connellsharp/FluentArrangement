@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace FluentArrangement
@@ -55,12 +56,15 @@ namespace FluentArrangement
 
     public class CreateReturnValueRequest : ICreateRequest
     {
-        public CreateReturnValueRequest(MethodInfo method)
+        public CreateReturnValueRequest(MethodInfo method, IEnumerable<object> arguments)
         {
             Method = method;
+            Arguments = arguments;
         }
 
         public MethodInfo Method { get; }
+        
+        public IEnumerable<object> Arguments { get; }
 
         public Type Type => Method.ReturnType;
 

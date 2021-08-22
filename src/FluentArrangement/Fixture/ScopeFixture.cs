@@ -20,14 +20,16 @@ namespace FluentArrangement
             _aggregateFactory.AddFactory(factory);
         }
 
+        public IFixture NewScope()
+        {
+            return new ScopeFixture(_thisScope);
+        }
+
         public object? Create(Type type)
         {
             return _thisScope.CreateObjectFromType(type);
         }
 
-        public IFixture NewScope()
-        {
-            return new ScopeFixture(_thisScope);
-        }
+        public RequestCollection Requests => _thisScope.Requests;
     }
 }
