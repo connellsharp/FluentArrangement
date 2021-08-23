@@ -7,14 +7,14 @@ namespace FluentArrangement
     {
         private readonly IFactory _factory;
         private readonly IScope _parentScope;
+        private readonly IRequestMonitor _monitor;
 
-        public FactoryScope(IFactory factory, IScope parentScope)
+        public FactoryScope(IFactory factory, IScope parentScope, IRequestMonitor monitor)
         {
             _factory = factory;
             _parentScope = parentScope;
+            _monitor = monitor;
         }
-
-        public RequestCollection Requests => _parentScope.Requests;
 
         public object? CreateObject(ICreateRequest request, IScope creationScope)
         {
@@ -23,7 +23,8 @@ namespace FluentArrangement
             if (!response.HasCreated)
                 return _parentScope.CreateObject(request, creationScope);
 
-            Requests.Log(request, response);
+            _monitor.Log(request, response);
+            
             return response.CreatedObject;
         }
     }

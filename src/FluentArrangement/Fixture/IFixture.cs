@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FluentArrangement
 {
@@ -10,6 +11,6 @@ namespace FluentArrangement
 
         object? Create(Type type);
 
-        RequestCollection Requests { get; }
+        IEnumerable<MonitoredRequest> Requests { get; }
     }
 }

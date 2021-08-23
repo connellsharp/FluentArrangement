@@ -6,10 +6,8 @@ namespace FluentArrangement
     /// </summary>
     internal class RootScope : IScope
     {
-        public RequestCollection Requests { get; } = new RequestCollection();
-
         public object? CreateObject(ICreateRequest request, IScope scope)
-        {            
+        {
             throw request.GetNotCreatedException();
         }
     }
